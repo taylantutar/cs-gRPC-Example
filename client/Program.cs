@@ -1,6 +1,6 @@
 ﻿
+using client;
 using Grpc.Net.Client;
-using server;
 
 Console.WriteLine("App is starting");
 
