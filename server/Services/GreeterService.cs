@@ -18,4 +18,11 @@ public class GreeterService : Greeter.GreeterBase
             Message = "Hello " + request.Name
         });
     }
+
+    public override Task<AddResponse> Add(AddRequest request, ServerCallContext context){
+        return Task.FromResult(new AddResponse {
+            Toplam = request.Sayi1 + request.Sayi2
+        });
+    }
+
 }
