@@ -29,7 +29,25 @@ public class CalculateService : Calculate.CalculateBase
                     break;
             }
 
-            await responseStream.WriteAsync(new CalculateResponse{Total = result});
+            await responseStream.WriteAsync(new CalculateResponse { Total = result });
         }
+    }
+
+    public override async Task<CombineNameResponse> CombineName(IAsyncStreamReader<CombineNameRequest> requestStream, ServerCallContext context)
+    {
+        var names = new List<string>();
+
+        while (await requestStream.MoveNext(context.CancellationToken))
+        {
+            await Task.Delay(1000);
+            Console.WriteLine($"Name are receiving!! Name: {requestStream.Current.Name}");
+            names.Add(requestStream.Current.Name);
+        }
+
+        Console.WriteLine($"Response is sending...");
+        return new CombineNameResponse
+        {
+            CombinedName = string.Join(';', names.ToArray())
+        };
     }
 }

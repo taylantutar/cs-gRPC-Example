@@ -5,6 +5,7 @@ option csharp_namespace = "calculate";
 package calculate;
 
 service Calculate {
+  rpc CombineName (stream CombineNameRequest) returns (CombineNameResponse);
   rpc CalculateAll (CalculateRequest) returns (stream CalculateResponse);
 }
 
@@ -14,5 +15,12 @@ message CalculateRequest {
 }
 message CalculateResponse {
   string total = 1;
+}
+
+message CombineNameRequest{
+  string name =1 ;
+}
+message CombineNameResponse{
+  string combinedName = 1;
 }
 
