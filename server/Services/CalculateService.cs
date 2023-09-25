@@ -50,4 +50,23 @@ public class CalculateService : Calculate.CalculateBase
             CombinedName = string.Join(';', names.ToArray())
         };
     }
+
+    public override async Task TotalAllArray(IAsyncStreamReader<TotalAllArrayRequest> requestStream, IServerStreamWriter<TotalAllArrayResponse> responseStream, ServerCallContext context)
+    {
+        var t1 = Task.Run(async () =>
+        {
+            while (await requestStream.MoveNext(context.CancellationToken))
+            {
+                var student = requestStream.Current.Student;
+                Console.WriteLine($"Receive a student --> {student.Name}");
+                var totalNote = student.Notes.Aggregate((temp, x) => temp + x);
+
+                await Task.Delay(1000);
+
+                await responseStream.WriteAsync(new TotalAllArrayResponse { Message = $"{student.Name}-{totalNote}" });
+            }
+        });
+
+        await t1;
+    }
 }

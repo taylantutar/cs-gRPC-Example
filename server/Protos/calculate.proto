@@ -7,6 +7,7 @@ package calculate;
 service Calculate {
   rpc CalculateAll (CalculateRequest) returns (stream CalculateResponse);
   rpc CombineName (stream CombineNameRequest) returns (CombineNameResponse);
+  rpc TotalAllArray (stream TotalAllArrayRequest) returns (stream TotalAllArrayResponse);
 }
 
 message CalculateRequest {
@@ -22,5 +23,17 @@ message CombineNameRequest{
 }
 message CombineNameResponse{
   string combinedName = 1;
+}
+
+
+message TotalAllArrayRequest{
+    Student student = 1;
+}
+message Student{
+    string name = 1;
+    repeated int32 notes = 2;
+}
+message TotalAllArrayResponse{
+  string message = 1;
 }
 
